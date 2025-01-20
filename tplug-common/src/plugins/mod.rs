@@ -1,3 +1,4 @@
+#[cfg(feature = "plugin-manager")]
 use std::fmt::Display;
 
 pub struct PluginMetadata<'a> {
