@@ -5,6 +5,9 @@ version = 4
 [[package]]
 name = "tplug"
 version = "0.1.0"
+dependencies = [
+ "tplug-common",
+]
 
 [[package]]
 name = "tplug-common"
@@ -13,3 +16,6 @@ version = "0.1.0"
 [[package]]
 name = "tplug-plugin"
 version = "0.1.0"
+dependencies = [
+ "tplug-common",
+]
