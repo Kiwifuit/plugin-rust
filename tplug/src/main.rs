@@ -16,5 +16,7 @@ fn main() -> anyhow::Result<()> {
     println!("Loading plugin: {}", a);
     (a.init)();
 
+    // tplug_common::plugins::PluginMetadata;
+
     Ok(())
 }

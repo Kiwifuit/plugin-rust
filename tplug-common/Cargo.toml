@@ -7,5 +7,6 @@ edition = "2021"
 tplug-macros = { path = "../tplug-macros" }
 
 [features]
-default = ["plugin"]
+default = []
 plugin = []
+plugin-manager = []

@@ -2,5 +2,5 @@ mod types;
 
 pub use types::*;
 
-// #[cfg(not(feature = "plugin-manager"))]
+#[cfg(feature = "plugin")]
 pub use tplug_macros::plugin_main;
