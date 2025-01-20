@@ -8,4 +8,4 @@ edition = "2021"
 [features]
 default = []
 plugin = []
-plugin-manager = []
+plugin-manager = ["plugin"]
