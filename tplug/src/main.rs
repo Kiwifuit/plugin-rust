@@ -11,7 +11,10 @@ fn main() -> anyhow::Result<()> {
     let plugin_meta: Symbol<Plugin> =
         unsafe { plugin.get(b"PLUGIN_METADATA") }.context("while fetching plugin metadata")?;
 
-    let a = unsafe { std::rc::Rc::from_raw(*plugin_meta) };
+    let a = unsafe { &**plugin_meta };
+
+    println!("Loading plugin: {}", a);
+    (a.init)();
 
     Ok(())
 }

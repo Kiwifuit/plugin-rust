@@ -6,4 +6,4 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.95"
 libloading = "0.8.6"
-tplug-common = { path = "../tplug-common", features = ["plugin-manager"] }
+tplug-common = { path = "../tplug-common" }
