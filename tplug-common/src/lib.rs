@@ -1,6 +1,5 @@
-#[cfg(feature = "plugin")]
 pub struct PluginMetadata<'a> {
-    name: &'a str,
-    version: &'a str,
-    init: fn() -> Box<dyn std::any::Any>,
+    pub name: &'a str,
+    pub version: &'a str,
+    pub init: fn() -> Box<dyn std::any::Any>,
 }
