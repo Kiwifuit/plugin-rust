@@ -65,9 +65,7 @@ fn is_box_dyn_log(ty: &Type) -> bool {
                 matches!(
                     generic_arg,
                     GenericArgument::Type(Type::TraitObject(generic_type_bound))
-                        if generic_type_bound.dyn_token.and_then(|_| {
-                            find_log_trait(generic_type_bound)
-                        }).is_some()
+                        if find_log_trait(generic_type_bound).is_some()
 
                 )
             }) {
