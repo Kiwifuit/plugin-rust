@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 tplug-macros = { path = "../tplug-macros" }
+log.workspace = true
 
 [features]
 default = []

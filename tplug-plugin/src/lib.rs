@@ -9,11 +9,22 @@
 //        },
 //    };
 
+use log::info;
+use thiserror::Error;
+
+#[derive(Debug, Error)]
+enum PluginError {
+    #[error("unable to set logger: {0}")]
+    LogInit(#[from] log::SetLoggerError),
+}
+
 struct Plugin;
 
 #[tplug_common::plugin_main]
-fn init() -> Box<Plugin> {
-    println!("Hello, world!");
+fn init(logger: Box<dyn log::Log>) -> Result<Box<Plugin>, PluginError> {
+    log::set_boxed_logger(logger)?;
 
-    Box::new(Plugin)
+    info!("Hello world from the plugin");
+
+    Ok(Box::new(Plugin))
 }

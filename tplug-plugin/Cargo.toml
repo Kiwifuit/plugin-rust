@@ -8,3 +8,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 tplug-common = { path = "../tplug-common", features = ["plugin"] }
+log.workspace = true
+thiserror.workspace = true
