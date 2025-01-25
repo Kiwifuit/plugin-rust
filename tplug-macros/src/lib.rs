@@ -52,7 +52,6 @@ fn validate_plugin_args(args: &Punctuated<FnArg, Token![,]>) -> Option<&'static 
         )
 }
 
-/// Helper function to check if the type is `Box<dyn log::Log>`
 fn is_box_dyn_log(ty: &Type) -> bool {
     match ty {
         Type::Path(TypePath { path, .. }) => Some(path),
@@ -63,30 +62,6 @@ fn is_box_dyn_log(ty: &Type) -> bool {
             path.segments.first().map(|seg| &seg.arguments)
         {
             if path_args.args.iter().any(|generic_arg| {
-                // dbg!(generic_arg);
-
-                // if let GenericArgument::Type(Type::TraitObject(generic_type_bound)) = generic_arg {
-                //     let a = generic_type_bound
-                //         .dyn_token
-                //         .and_then(|_| {
-                //             generic_type_bound
-                //                 .bounds
-                //                 .iter()
-                //                 .filter_map(|bound| match bound {
-                //                     syn::TypeParamBound::Trait(trait_bound) => Some(trait_bound),
-                //                     _ => None,
-                //                 })
-                //                 .find(|trait_bounds| {
-                //                     trait_bounds
-                //                         .path
-                //                         .segments
-                //                         .last()
-                //                         .is_some_and(|trait_segment| trait_segment.ident == "Log")
-                //                 })
-                //         })
-                //         .is_some();
-                // }
-
                 matches!(
                     generic_arg,
                     GenericArgument::Type(Type::TraitObject(generic_type_bound))
@@ -116,31 +91,4 @@ fn is_box_dyn_log(ty: &Type) -> bool {
         None
     })
     .is_some()
-
-    // return true; // Short-circuit this function to always return true
-
-    // Ensure the type is a `Box`
-    // if let Type::Path(TypePath { path, .. }) = ty {
-    //     if path.is_ident("Box") {
-    //         // Ensure the type inside the Box is `dyn log::Log`
-    //         if let Some(PathArguments::AngleBracketed(args)) =
-    //             path.segments.first().map(|seg| &seg.arguments)
-    //         {
-    //             return args.args.iter().any(|arg|
-    //                 matches!(
-    //                     arg,
-    //                     GenericArgument::Type(Type::TraitObject(obj))
-    //                         if obj.bounds.get(0).is_some_and(|bound| {
-    //                             matches!(
-    //                                 bound,
-    //                                 syn::TypeParamBound::Trait(trait_bound) if trait_bound.path.is_ident("log::Log")
-    //                             )
-    //                         })));
-    //         }
-    //     }
-    // }
-
-    // // if let Type::Path()
-
-    // false
 }
