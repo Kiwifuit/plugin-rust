@@ -1,6 +1,6 @@
 use anyhow::Context;
 use libloading::{Library, Symbol};
-use log::{info, Log};
+use log::info;
 use tplug_common::plugins::PluginMetadata;
 
 type Plugin = *const PluginMetadata<'static>;
@@ -21,8 +21,6 @@ fn main() -> anyhow::Result<()> {
     let res = (a.init)(logger);
 
     dbg!(res);
-
-    // tplug_common::plugins::PluginMetadata;
 
     Ok(())
 }

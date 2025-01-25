@@ -9,9 +9,10 @@ proc-macro = true
 [dependencies]
 quote = "1.0.38"
 syn = { version = "2.0.96", default-features = false, features = [
-  "full",
-  "proc-macro",
-  "parsing",
-  "extra-traits", # This trait should never be on during production releases
+  "full",       # Types
+  "proc-macro", # Proc macro parsing
+  "parsing",    # Also proc macro parsing
+  "printing",   # Codegen
+  # "extra-traits", # This trait should never be on during production releases
 ] }
 proc-macro2 = "1.0.93"
