@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn::{
     parse_macro_input, punctuated::Punctuated, FnArg, GenericArgument, ItemFn, PathArguments,
-    Token, Type, TypePath,
+    Token, Type, TypePath, TypeTraitObject,
 };
 
 #[proc_macro_attribute]
@@ -66,21 +66,8 @@ fn is_box_dyn_log(ty: &Type) -> bool {
                     generic_arg,
                     GenericArgument::Type(Type::TraitObject(generic_type_bound))
                         if generic_type_bound.dyn_token.and_then(|_| {
-                            generic_type_bound
-                                .bounds
-                                .iter()
-                                .filter_map(|bound| match bound {
-                                    syn::TypeParamBound::Trait(trait_bound) => Some(trait_bound),
-                                    _ => None,
-                                })
-                                .find(|trait_bounds| {
-                                    trait_bounds
-                                        .path
-                                        .segments
-                                        .last()
-                                        .is_some_and(|trait_segment| trait_segment.ident == "Log")
-                                })
-                    }).is_some()
+                            find_log_trait(generic_type_bound)
+                        }).is_some()
 
                 )
             }) {
@@ -91,4 +78,23 @@ fn is_box_dyn_log(ty: &Type) -> bool {
         None
     })
     .is_some()
+}
+
+fn find_log_trait(generic_type_bound: &TypeTraitObject) -> Option<&syn::TraitBound> {
+    generic_type_bound
+        .bounds
+        .iter()
+        // Only get traits
+        .filter_map(|type_parameter| match type_parameter {
+            syn::TypeParamBound::Trait(trait_bound) => Some(trait_bound),
+            _ => None,
+        })
+        // Find the `Log` trait
+        .find(|trait_bound| {
+            trait_bound
+                .path
+                .segments
+                .last()
+                .is_some_and(|trait_segment| trait_segment.ident == "Log")
+        })
 }
