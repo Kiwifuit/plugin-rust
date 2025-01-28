@@ -8,6 +8,7 @@ pub type Plugin = Box<dyn std::any::Any>;
 pub struct PluginMetadata<'a> {
     pub name: &'a str,
     pub version: &'a str,
+    pub compiled_for_rustc_version: (&'a str, &'a str, &'a str),
     pub init: fn(Box<dyn log::Log>) -> Result<Plugin>,
 }
 

@@ -11,6 +11,10 @@ pub fn plugin_main(_args: TokenStream, input: TokenStream) -> TokenStream {
     let plugin_init = &input_fn.block;
     let plugin_init_args = &input_fn.sig.inputs;
 
+    let rustc_version_major = env!("RUSTC_VERSION_MAJOR");
+    let rustc_version_minor = env!("RUSTC_VERSION_MINOR");
+    let rustc_version_patch = env!("RUSTC_VERSION_PATCH");
+
     if let Some(err) = validate_plugin_args(plugin_init_args) {
         return syn::Error::new_spanned(plugin_init_args, err)
             .to_compile_error()
@@ -22,6 +26,11 @@ pub fn plugin_main(_args: TokenStream, input: TokenStream) -> TokenStream {
         pub static PLUGIN_METADATA: ::tplug_common::PluginMetadata<'static> = ::tplug_common::PluginMetadata {
             name: env!("CARGO_PKG_NAME"),
             version: env!("CARGO_PKG_VERSION"),
+            compiled_for_rustc_version: (
+                #rustc_version_major,
+                #rustc_version_minor,
+                #rustc_version_patch,
+            ),
             init: |#plugin_init_args| #plugin_init
         };
     }.into()

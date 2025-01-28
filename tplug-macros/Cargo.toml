@@ -16,3 +16,7 @@ syn = { version = "2.0.96", default-features = false, features = [
   # "extra-traits", # This trait should never be on during production releases
 ] }
 proc-macro2 = "1.0.93"
+
+[build-dependencies]
+rustc_version = "0.4.1"
+anyhow.workspace = true
